@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "lakes-8f43b"
-  }
+    "default": "lakes-8f43b",
+    "lakes-backend": "lof-backend"
+  },
+  "targets": {}
 }

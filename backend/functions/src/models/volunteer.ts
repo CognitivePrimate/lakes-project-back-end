@@ -1,16 +1,15 @@
 import { ObjectId } from "mongodb";
 
-export default interface Ranger {
+export default interface Volunteer {
     _id?: ObjectId;
+    organizations: [];
     firstName: string;
     lastName:  string;
-    rangerHandle: string;
+    preferredName?: string;
     otherKnownAliases?: string[];
     email: string;
-    hoursWorked?: number[]; //<-- how to make an array of arrays? want hours worked by year
-    yearsAttended: number;
-    khakiShadow: boolean;
-    khaki: boolean;
+    hoursWorked?: []; //<-- how to make an array of arrays? want hours worked by year
+    yearsAttended: [];
     lead: boolean;
     ICS?: number[];
     greenDot: boolean;

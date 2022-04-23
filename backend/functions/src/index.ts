@@ -4,7 +4,7 @@ import cors from "cors";
 
 // import routes
 // import mainRoutes from "./routes/main-routes";
-import rangerDBRoutes from "./routes/ranger-db-routes";
+import DBRoutes from "./routes/volunteer-db-routes";
 
 // create instance of express
 const app = express();
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // add routes to application ----- CHANGE TO MAIN ROUTES DOWN THE ROAD --THIS IS FOR TESTING DB ONLY
-app.use("/", rangerDBRoutes);
+app.use("/", DBRoutes);
 
 export const api = functions.https.onRequest(app);
 

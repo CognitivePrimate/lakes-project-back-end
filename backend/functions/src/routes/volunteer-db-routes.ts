@@ -4,14 +4,15 @@ import { ObjectId } from "mongodb";
 
 // imports from local files
 import { getClient } from "../db";
-import Ranger from "../models/ranger";
+import Volunteer from "../models/volunteer";
 
-const rangerDBRoutes = express.Router();
+const DBRoutes = express.Router();
 
-// get all rangers in db
-rangerDBRoutes.get("/rangerDB", (req, res)=> {
+
+// get all Volunteers in db
+DBRoutes.get("/volunteerDB", (req, res)=> {
     getClient().then(client => {
-        return client.db().collection<Ranger>('rangers').find().toArray().then(results => {
+        return client.db().collection<Volunteer>('Volunteers').find().toArray().then(results => {
             res.json(results); //send JSON results
         });
     }).catch(err => {
@@ -20,13 +21,13 @@ rangerDBRoutes.get("/rangerDB", (req, res)=> {
     });
 })
 
-// get a ranger by id
-rangerDBRoutes.get("/rangerDB/:id", (req, res) => {
+// get a Volunteer by id
+DBRoutes.get("/volunteerDB/:id", (req, res) => {
     const id = req.params.id;
     getClient().then(client => {
-        return client.db().collection<Ranger>("rangers").findOne({_id : new ObjectId(id)}).then(rangers => {
-            if (rangers) {
-                res.json(rangers);
+        return client.db().collection<Volunteer>("Volunteers").findOne({_id : new ObjectId(id)}).then(Volunteers => {
+            if (Volunteers) {
+                res.json(Volunteers);
             }else{
                 res.status(404).json({message: "Sorry, buckaroo. These aren't the droids you're looking for."});
             }
@@ -37,13 +38,13 @@ rangerDBRoutes.get("/rangerDB/:id", (req, res) => {
     })
 })
 
-// add a ranger
-rangerDBRoutes.post("/rangerDB", (req, res) => {
-    const ranger: Ranger = req.body;
+// add a Volunteer
+DBRoutes.post("/volunteerDB", (req, res) => {
+    const Volunteer: Volunteer = req.body;
     getClient().then(client => {
-        return client.db().collection<Ranger>("rangers").insertOne(ranger).then(result => {
-            ranger._id = result.insertedId;
-            res.status(201).json(ranger);
+        return client.db().collection<Volunteer>("Volunteers").insertOne(Volunteer).then(result => {
+            Volunteer._id = result.insertedId;
+            res.status(201).json(Volunteer);
         });
     }).catch(err => {
         console.error("FAIl", err);
@@ -51,12 +52,12 @@ rangerDBRoutes.post("/rangerDB", (req, res) => {
     });
 })
 
-// update a ranger by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED
-// rangerDBRoutes.put("/rangerDB/:id", (req, res) => {
+// update a Volunteer by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED
+// DBRoutes.put("/VolunteerDB/:id", (req, res) => {
 //     const id = req.params.id;
-//     const ranger: Ranger = req.body;
+//     const Volunteer: Volunteer = req.body;
 //     getClient().then(client => {
-//         return client.db().collection<Ranger>("rangers").updateOne({_id: ObjectId}, ranger).then(result => {
+//         return client.db().collection<Volunteer>("Volunteers").updateOne({_id: ObjectId}, Volunteer).then(result => {
 //             if (result.modifiedCount === 0) {
 //                 res.status(404).json({message: "Not Found"});
 //             }else{
@@ -68,10 +69,10 @@ rangerDBRoutes.post("/rangerDB", (req, res) => {
 
 
 // delete by id
-rangerDBRoutes.delete("/:id", (req, res) => {
+DBRoutes.delete("/:id", (req, res) => {
     const id = req.params.id;
     getClient().then(client => {
-      return client.db().collection<Ranger>("rangers").deleteOne({ _id: new ObjectId(id) }).then(result => {
+      return client.db().collection<Volunteer>("Volunteers").deleteOne({ _id: new ObjectId(id) }).then(result => {
         if (result.deletedCount === 0) {
           res.status(404).json({message: "Not Found"});
         } else {
@@ -87,4 +88,4 @@ rangerDBRoutes.delete("/:id", (req, res) => {
 
 
 
-export default rangerDBRoutes;
+export default DBRoutes;

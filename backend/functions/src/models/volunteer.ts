@@ -11,6 +11,7 @@ export default interface Volunteer {
     hoursWorked?: []; //<-- how to make an array of arrays? want hours worked by year
     yearsAttended: [];
     lead: boolean;
+    permissionsLevel: number;
     ICS?: number[];
     greenDot: boolean;
     isActive?: boolean;

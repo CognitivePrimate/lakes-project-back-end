@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb";
-
 export default interface Volunteer {
     _id?: ObjectId;
     organizations: [];
@@ -10,7 +9,7 @@ export default interface Volunteer {
     email: string;
     hoursWorked?: []; //<-- how to make an array of arrays? want hours worked by year
     yearsAttended: [];
-    lead: boolean;
+    permissionsLevel: number;
     ICS?: number[];
     greenDot: boolean;
     isActive?: boolean;

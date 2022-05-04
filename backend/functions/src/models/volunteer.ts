@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 export default interface Volunteer {
-    _id?: ObjectId;
+    //FIX ANY
+    _id?: ObjectId | any;
     organizations: [];
     firstName: string;
     lastName:  string;

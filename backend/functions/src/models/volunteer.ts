@@ -8,7 +8,7 @@ export default interface Volunteer {
     preferredName?: string;
     otherKnownAliases?: string[];
     email: string;
-    hoursWorked?: []; //<-- how to make an array of arrays? want hours worked by year
+    hoursWorked?: []; 
     yearsAttended: [];
     lead: boolean;
     permissionsLevel: number;
@@ -16,3 +16,4 @@ export default interface Volunteer {
     greenDot: boolean;
     isActive?: boolean;
 }
+

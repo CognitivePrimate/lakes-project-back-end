@@ -12,7 +12,7 @@ const DBRoutes = express.Router();
 // get all Volunteers in db
 DBRoutes.get("/volunteerDB", (req, res)=> {
     getClient().then(client => {
-        return client.db().collection<Volunteer>('Volunteers').find().toArray().then(results => {
+        return client.db().collection<Volunteer>("Volunteers").find().toArray().then(results => {
             res.json(results); //send JSON results
         });
     }).catch(err => {
@@ -40,7 +40,7 @@ DBRoutes.get("/volunteerDB/:id", (req, res) => {
 
 // add a Volunteer
 DBRoutes.post("/volunteerDB", (req, res) => {
-    const Volunteer: Volunteer = req.body;
+    const Volunteer = req.body as Volunteer;
     getClient().then(client => {
         return client.db().collection<Volunteer>("Volunteers").insertOne(Volunteer).then(result => {
             Volunteer._id = result.insertedId;

@@ -1,10 +1,14 @@
 // imports from modules
-import express from "express";
+import express from 'express';
+import { Request, Response } from 'express'
 import { ObjectId } from "mongodb";
+import firebase from 'firebase/compat/app'
+
 
 // imports from local files
 import { getClient } from "../db";
 import Volunteer from "../models/volunteer";
+import { Auth } from 'firebase-admin/lib/auth/auth';
 
 const DBRoutes = express.Router();
 
@@ -39,8 +43,9 @@ DBRoutes.get("/volunteerDB/:id", (req, res) => {
 })
 
 // add a Volunteer
-DBRoutes.post("/volunteerDB", (req, res) => {
+DBRoutes.post("/volunteerDB", (req: any, res) => {
     const Volunteer = req.body as Volunteer;
+    const auth: Auth = req.currentUser
     getClient().then(client => {
         return client.db().collection<Volunteer>("Volunteers").insertOne(Volunteer).then(result => {
             Volunteer._id = result.insertedId;

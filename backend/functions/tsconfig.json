@@ -12,5 +12,11 @@
   "compileOnSave": true,
   "include": [
     "src"
+, "types.d.ts"  ],
+  //added from stackoverflow suggestions 
+  "files":["types.d.ts"],
+  "typeRoots": [
+    "./node_module/@types",
+    "./src/types"
   ]
 }

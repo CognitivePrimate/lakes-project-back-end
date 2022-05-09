@@ -1,8 +1,9 @@
+//From Firebase AdminSDK
 const admin = require('firebase-admin');
 const serviceAccount = require('./lof-backend-firebase-adminsdk-3tjxp-f6b788985b.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://phone-book-fe436.firebaseio.com',
+  databaseURL: MONGO_URI
 });
 async function decodeIDToken(req, res, next) {
   const header = req.headers?.authorization;

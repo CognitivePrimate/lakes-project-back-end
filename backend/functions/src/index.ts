@@ -6,8 +6,12 @@ import cors from "cors";
 // import mainRoutes from "./routes/main-routes";
 import DBRoutes from "./routes/volunteer-db-routes";
 
+
+//to decode token from firebase
+const decodeIDToken = require('./authenticateToken')
 // create instance of express
 const app = express();
+app.use(decodeIDToken)
 
 // enable ability to parse body of requests
 app.use(express.json());

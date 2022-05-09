@@ -46,15 +46,18 @@ DBRoutes.get("/volunteerDB/:id", (req, res) => {
 DBRoutes.post("/volunteerDB", (req: any, res) => {
     const Volunteer = req.body as Volunteer;
     const auth: Auth = req.currentUser
-    getClient().then(client => {
-        return client.db().collection<Volunteer>("Volunteers").insertOne(Volunteer).then(result => {
-            Volunteer._id = result.insertedId;
-            res.status(201).json(Volunteer);
+    if(auth){
+        getClient().then(client => {
+            return client.db().collection<Volunteer>("Volunteers").insertOne(Volunteer).then(result => {
+                console.log('auth:', auth)
+                Volunteer._id = result.insertedId;
+                res.status(201).json(Volunteer);
+            });
+        }).catch(err => {
+            console.error("FAIl", err);
+            res.status(500).json({message: "Internal Server Error"});
         });
-    }).catch(err => {
-        console.error("FAIl", err);
-        res.status(500).json({message: "Internal Server Error"});
-    });
+    }
 })
 
 // update a Volunteer by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED

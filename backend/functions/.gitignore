@@ -11,3 +11,7 @@ node_modules/
 .env
 
 .runtimeconfig.json
+
+firebase-admin.ts
+lof-backend-firebase-adminsdk-3tjxp-f6b788985b.json
+

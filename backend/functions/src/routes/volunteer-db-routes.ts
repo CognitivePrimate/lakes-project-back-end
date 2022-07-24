@@ -1,8 +1,10 @@
 // imports from modules
 import express from 'express';
-import { Request, Response } from 'express'
 import { ObjectId } from "mongodb";
-import firebase from 'firebase/compat/app'
+// import firebase from 'firebase/compat/app'
+
+import decodeIDToken  from '../services/authenticateToken'
+import { createUser } from '../services/createUser';
 
 
 // imports from local files
@@ -44,8 +46,10 @@ DBRoutes.get("/volunteerDB/:id", (req, res) => {
 
 // add a Volunteer
 DBRoutes.post("/volunteerDB", (req: any, res) => {
+    //allows creation as long as the request body is type Volunteer && user is logged in
     const Volunteer = req.body as Volunteer;
     const auth: Auth = req.currentUser
+    console.log('CurrentUser:', auth)
     if(auth){
         getClient().then(client => {
             return client.db().collection<Volunteer>("Volunteers").insertOne(Volunteer).then(result => {

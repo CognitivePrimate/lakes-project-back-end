@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 // import firebase from 'firebase/compat/app'
 
 import decodeIDToken  from '../services/authenticateToken'
-import { createUser } from '../services/createUser';
+// import { createUser } from '../services/createUser';
 
 
 // imports from local files
@@ -62,6 +62,13 @@ DBRoutes.post("/volunteerDB", (req: any, res) => {
             res.status(500).json({message: "Internal Server Error"});
         });
     }
+})
+
+//verify a firebase user as app user
+DBRoutes.get("/volunteerDB/tokenAuth", (req: any, res:any) => {
+    // const token = req.body
+    const decodedToken = decodeIDToken(req, res)
+    console.log('decodedToken', decodedToken)
 })
 
 // update a Volunteer by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED

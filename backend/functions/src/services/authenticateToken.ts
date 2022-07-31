@@ -1,8 +1,9 @@
 //From Firebase AdminSDK
 const admin = require('firebase-admin');
 
-async function decodeIDToken(req: any, res: any, next: any) {
-  console.log('types:', typeof(req), typeof(res), typeof(next))
+//i cut next from req,res,next in arguments. maybe need to put back?
+async function decodeIDToken(req: any, res: any) {
+  console.log('types:', typeof(req), typeof(res))
   const header = req.headers?.authorization;
   if (header !== 'Bearer null' && req.headers?.authorization?.startsWith('Bearer ')) {
     const idToken = req.headers.authorization.split('Bearer ')[1];
@@ -14,7 +15,7 @@ async function decodeIDToken(req: any, res: any, next: any) {
           console.log(err);
         }
   }
-    next();
+    // next();
 }
 
 export default decodeIDToken;

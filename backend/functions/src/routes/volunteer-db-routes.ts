@@ -1,5 +1,5 @@
 // imports from modules
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { ObjectId } from "mongodb";
 // import firebase from 'firebase/compat/app'
 
@@ -65,9 +65,11 @@ DBRoutes.post("/volunteerDB", (req: any, res) => {
 })
 
 //verify a firebase user as app user
-DBRoutes.get("/volunteerDB/tokenAuth", (req: any, res:any) => {
+DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res:any, next: NextFunction) => {
     // const token = req.body
-    const decodedToken = decodeIDToken(req, res)
+    console.log('req.body', req.body)
+    console.log('res.header', res.header)    
+    const decodedToken = await decodeIDToken(req, res, next)
     console.log('decodedToken', decodedToken)
 })
 

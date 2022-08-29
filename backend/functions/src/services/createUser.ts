@@ -26,7 +26,6 @@ import Volunteer from '../models/volunteer'
 const createUser = async (token: any): Promise<Volunteer> => {
   const nameArr = token.name.split(' ')
   const user: Volunteer = {
-    _id: '',
     uid: token.uid,
     organizations: [],
     firstName: nameArr[0],

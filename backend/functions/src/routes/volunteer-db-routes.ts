@@ -10,7 +10,6 @@ import decodeIDToken from '../services/authenticateToken'
 // imports from local files
 import { getClient } from "../db";
 import Volunteer from "../models/volunteer";
-import { Auth } from 'firebase-admin/lib/auth/auth';
 import createUser from '../services/createUser';
 
 const DBRoutes = express.Router();
@@ -66,13 +65,13 @@ DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res: any, next: NextFun
     console.log('decodedToken', decodedToken)
     const uid = decodedToken.uid;
     getClient().then(client => {
-        return client.db().collection<Volunteer>("Volunteers").findOne({ uid }).then(async Volunteers => {
-            if (Volunteers) {
-                res.json(Volunteers);
-                console.log(res.JSON(Volunteers))
+        return client.db().collection<Volunteer>("Volunteers").findOne({ uid }).then(async volunteer => {
+            if (volunteer) {
+                res.json(volunteer);
+                console.log(res.json(volunteer))
             } else {
                 // res.status(404).json({ message: "Sorry, buckaroo. These aren't the droids you're looking for." });
-                const newUser: Promise<any> = await createUser(decodedToken).then((user) => {
+                await createUser(decodedToken).then((user) => {
                     console.log('newUser', user)
                     return res.json({message: 'New user Created:', user: user})
                 })

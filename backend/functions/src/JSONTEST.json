@@ -1,0 +1,21 @@
+{
+      name: 'Derek Jackson',
+      picture: 'https: //lh3.googleusercontent.com/a-/AFdZucr27U8ZNnJlK0oEf0O1wziGiA-2toWluMwm914M7g=s96-c',
+      iss: 'https: //securetoken.google.com/lof-backend',
+      aud: 'lof-backend',
+      auth_time: 1661716218,
+      user_id: 'ESZibFjnPRg7T3Pj4qMgvYpkPoR2',
+      sub: 'ESZibFjnPRg7T3Pj4qMgvYpkPoR2',
+      iat: 1661716219,
+      exp: 1661719819,
+      email: 'd4jackson84@gmail.com',
+      email_verified: true,
+      firebase: {
+        identities: { 'google.com': [Array
+      ], email: [Array
+      ]
+    },
+        sign_in_provider: 'google.com'
+  },
+      uid: 'ESZibFjnPRg7T3Pj4qMgvYpkPoR2'
+}

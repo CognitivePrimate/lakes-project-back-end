@@ -43,3 +43,51 @@
   },
   "_id": "630c1b09581332680175f5f3"
 }
+
+(res).data: {
+  "message": "New user Created:",
+  "user": {
+    "_id": "",
+    "uid": "ESZibFjnPRg7T3Pj4qMgvYpkPoR2",
+    "organizations": [],
+    "firstName": "Derek",
+    "lastName": "Jackson",
+    "preferredName": "",
+    "pronouns": "",
+    "otherKnownAliases": [],
+    "email": "d4jackson84@gmail.com",
+    "hoursWorked": [],
+    "yearsAttended": [],
+    "lead": false,
+    "permissionsLevel": 0,
+    "additionalTrainings": [],
+    "specializations": [],
+    "isActive": true,
+    "picture": "https://lh3.googleusercontent.com/a-/AFdZucr27U8ZNnJlK0oEf0O1wziGiA-2toWluMwm914M7g=s96-c"
+  },
+  "_id": "630c1c0442177172a9f0be1e"
+}
+
+(res).data: {
+  "message": "New user Created:",
+  "user": {
+    "_id": "",
+    "uid": "ESZibFjnPRg7T3Pj4qMgvYpkPoR2",
+    "organizations": [],
+    "firstName": "Derek",
+    "lastName": "Jackson",
+    "preferredName": "",
+    "pronouns": "",
+    "otherKnownAliases": [],
+    "email": "d4jackson84@gmail.com",
+    "hoursWorked": [],
+    "yearsAttended": [],
+    "lead": false,
+    "permissionsLevel": 0,
+    "additionalTrainings": [],
+    "specializations": [],
+    "isActive": true,
+    "picture": "https://lh3.googleusercontent.com/a-/AFdZucr27U8ZNnJlK0oEf0O1wziGiA-2toWluMwm914M7g=s96-c"
+  },
+  "_id": "630c1c04fe6a4c6889924bf9"
+}

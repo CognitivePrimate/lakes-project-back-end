@@ -1,6 +1,6 @@
 // imports from modules
 import express, { NextFunction } from 'express';
-import { ObjectId } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 // import firebase from 'firebase/compat/app'
 
 import decodeIDToken from '../services/authenticateToken'
@@ -64,11 +64,11 @@ DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res: any, next: NextFun
     const decodedToken = await decodeIDToken(req, res, next)
     console.log('decodedToken', decodedToken)
     const uid = decodedToken.uid;
-    getClient().then(client => {
-        return client.db().collection<Volunteer>("Volunteers").findOne({ uid }).then(async volunteer => {
+    getClient().then(async (client: MongoClient) => {
+        return await client.db().collection<Volunteer>("Volunteers").findOne({ uid }).then(async volunteer => {
             if (volunteer) {
                 res.json(volunteer);
-                console.log(res.json(volunteer))
+                console.log('res.json', res.json(volunteer))
             } else {
                 // res.status(404).json({ message: "Sorry, buckaroo. These aren't the droids you're looking for." });
                 await createUser(decodedToken).then((user) => {

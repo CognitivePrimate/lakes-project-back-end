@@ -15,7 +15,7 @@ async function decodeIDToken(req: any, res: any, next: any) {
           console.log(err);
         }
   }
-    next();
+    // next();
 }
 
 export default decodeIDToken;

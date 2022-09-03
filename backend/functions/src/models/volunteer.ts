@@ -1,10 +1,12 @@
 import { ObjectId } from "mongodb";
+import Organization from "./organizations";
 
 export default interface Volunteer {
     //FIX ANY
     _id?: ObjectId | any;
     uid: string;
-    organizations: [];
+    organizations: Organization[];
+    activeOrganization: Organization | undefined;
     firstName: string;
     lastName:  string;
     preferredName?: string;

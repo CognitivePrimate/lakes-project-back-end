@@ -62,13 +62,13 @@ DBRoutes.post("/volunteerDB", (req: any, res) => {
 //verify a firebase user as app user
 DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res: any, next: NextFunction) => {
     const decodedToken = await decodeIDToken(req, res, next)
-    console.log('decodedToken', decodedToken)
+    // console.log('decodedToken', decodedToken)
     const uid = decodedToken.uid;
     getClient().then(async (client: MongoClient) => {
         return await client.db().collection<Volunteer>("Volunteers").findOne({ uid }).then(async volunteer => {
             if (volunteer) {
                 res.json(volunteer);
-                console.log('res.json', res.json(volunteer))
+                // console.log('res.json', res.json(volunteer))
             } else {
                 // res.status(404).json({ message: "Sorry, buckaroo. These aren't the droids you're looking for." });
                 await createUser(decodedToken).then((user) => {
@@ -85,19 +85,22 @@ DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res: any, next: NextFun
 })
 
 // update a Volunteer by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED
-// DBRoutes.put("/VolunteerDB/:id", (req, res) => {
-//     const id = req.params.id;
-//     const Volunteer: Volunteer = req.body;
-//     getClient().then(client => {
-//         return client.db().collection<Volunteer>("Volunteers").updateOne({_id: ObjectId}, Volunteer).then(result => {
-//             if (result.modifiedCount === 0) {
-//                 res.status(404).json({message: "Not Found"});
-//             }else{
-
-//             }
-//         })
-//     })
-// })
+DBRoutes.put("/VolunteerDB/:id", (req, res) => {
+    const id = req.params.id;
+    console.log('id',id)
+    const volunteer: Volunteer = req.body;
+    delete volunteer._id
+    getClient().then(client => {
+        return client.db().collection<Volunteer>("Volunteers").updateOne( {_id:new ObjectId(id)}, {$set: volunteer}).then(result => {
+            if (result.modifiedCount === 0) {
+                res.status(404).json({message: "Nah."});
+            }else{
+                volunteer._id = new ObjectId(id)
+                res.json(volunteer)
+            }
+        })
+    })
+})
 
 
 // delete by id

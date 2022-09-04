@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
-import Volunteer from './volunteer';
+// import Volunteer from './volunteer';
 
 export default interface Organization {
   _id?: ObjectId;
   name: string;
-  leads: Volunteer[];
-  volunteers: Volunteer[];
+  leads: object[];
+  volunteers: object[];
 }

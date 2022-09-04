@@ -1,17 +1,15 @@
 // imports from modules
-import express, { NextFunction } from 'express';
-import { MongoClient, ObjectId } from "mongodb";
+import express from 'express';
+// import { MongoClient, ObjectId } from "mongodb";
 // import firebase from 'firebase/compat/app'
 
-import decodeIDToken from '../services/authenticateToken'
 // import { createUser } from '../services/createUser';
 
 
 // imports from local files
 import { getClient } from "../db";
-import Volunteer from "../models/volunteer";
+// import Volunteer from "../models/volunteer";
 import Organization from '../models/organizations';
-import createUser from '../services/createUser';
 
 const orgRoutes = express.Router();
 
@@ -34,3 +32,17 @@ orgRoutes.post("/organizationDB", (req: any, res: any) => {
   }
       
 })
+
+// get all Volunteers in db
+orgRoutes.get("/organizationDB", (req, res) => {
+  getClient().then(client => {
+      return client.db().collection<Organization>("Organizations").find().toArray().then(results => {
+          res.json(results); //send JSON results
+      });
+  }).catch(err => {
+      console.error("Fail", err);
+      res.status(500).json({ message: "Internal Server Error" })
+  });
+})
+
+export default orgRoutes

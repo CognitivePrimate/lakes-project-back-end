@@ -4,17 +4,18 @@ import cors from "cors";
 const admin = require('firebase-admin')
 admin.initializeApp();
 
-
 // import routes
 // import mainRoutes from "./routes/main-routes";
 import DBRoutes from "./routes/volunteer-db-routes";
+import orgRoutes from "./routes/organization-db-routes"
 
 
 //to decode token from firebase
 // const decodeIDToken = require('./authenticateToken')
 // create instance of express
 const app = express();
-// app.use(decodeIDToken)
+
+// app.options('*', cors())
 
 // enable ability to parse body of requests
 app.use(express.json());
@@ -24,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 
 // add routes to application ----- CHANGE TO MAIN ROUTES DOWN THE ROAD --THIS IS FOR TESTING DB ONLY
-app.use("/", DBRoutes);
+app.use("/", DBRoutes, orgRoutes);
 
 export const api = functions.https.onRequest(app);
 

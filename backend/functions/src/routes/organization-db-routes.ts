@@ -9,7 +9,7 @@ import express from 'express';
 // imports from local files
 import { getClient } from "../db";
 // import Volunteer from "../models/volunteer";
-import Organization from '../models/organizations';
+import  {Organization, OrgContext } from '../models/organizations';
 
 const orgRoutes = express.Router();
 

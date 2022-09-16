@@ -1,25 +1,28 @@
 import { ObjectId } from "mongodb";
-import Organization from "./organizations";
+import { OrgContext } from "./organizations";
 
-export default interface Volunteer {
-    //FIX ANY
-    _id?: ObjectId | any;
+export interface Volunteer {
+    _id?: ObjectId;
     uid: string;
-    organizations: Organization[];
-    activeOrganization: Organization | undefined;
+    organizations: OrgContext[];
+    activeOrganization: OrgContext | undefined;
     firstName: string;
     lastName:  string;
     preferredName?: string;
-    pronouns: string
     otherKnownAliases?: string[];
     email: string;
     hoursWorked?: []; 
     yearsAttended: [];
     lead: boolean;
     permissionsLevel: number;
-    additionalTrainings?: string[];
-    specializations: string[];
+    ICS?: number[];
+    greenDot: boolean;
     isActive?: boolean;
-    picture: string
 }
 
+export interface volContext {
+    firstName: Volunteer["firstName"],
+    lastName: Volunteer["lastName"],
+    email: Volunteer["email"],
+    _id: Volunteer["_id"]
+}

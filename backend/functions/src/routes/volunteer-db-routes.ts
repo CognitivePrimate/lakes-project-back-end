@@ -9,7 +9,7 @@ import decodeIDToken from '../services/authenticateToken'
 
 // imports from local files
 import { getClient } from "../db";
-import { Volunteer, volContext } from "../models/volunteer";
+import { Volunteer} from "../models/volunteer";
 import createUser from '../services/createUser';
 
 const DBRoutes = express.Router();
@@ -63,6 +63,7 @@ DBRoutes.post("/volunteerDB", (req: any, res) => {
 DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res: any, next: NextFunction) => {
     const decodedToken = await decodeIDToken(req, res, next)
     // console.log('decodedToken', decodedToken)
+    // console.log('type:', typeof decodedToken)
     const uid = decodedToken.uid;
     getClient().then(async (client: MongoClient) => {
         return await client.db().collection<Volunteer>("Volunteers").findOne({ uid }).then(async volunteer => {
@@ -87,15 +88,18 @@ DBRoutes.post("/volunteerDB/tokenAuth", async (req: any, res: any, next: NextFun
 // update a Volunteer by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED
 DBRoutes.put("/VolunteerDB/:id", (req, res) => {
     const id = req.params.id;
-    console.log('id',id)
+    // console.log('id',id)
     const volunteer: Volunteer = req.body;
+    // console.log(volunteer)
     delete volunteer._id
+    volunteer.activeOrganization = ''
     getClient().then(client => {
         return client.db().collection<Volunteer>("Volunteers").updateOne( {_id:new ObjectId(id)}, {$set: volunteer}).then(result => {
             if (result.modifiedCount === 0) {
                 res.status(404).json({message: "Nah."});
             }else{
                 volunteer._id = new ObjectId(id)
+                console.log('resVol', volunteer)
                 res.json(volunteer)
             }
         })

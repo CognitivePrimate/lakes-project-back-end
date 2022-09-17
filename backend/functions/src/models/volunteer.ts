@@ -5,19 +5,21 @@ export interface Volunteer {
     _id?: ObjectId;
     uid: string;
     organizations: OrgContext[];
-    activeOrganization: OrgContext | undefined;
+    activeOrganization?: OrgContext | '';
     firstName: string;
     lastName:  string;
     preferredName?: string;
+    pronouns: string;
     otherKnownAliases?: string[];
     email: string;
     hoursWorked?: []; 
     yearsAttended: [];
     lead: boolean;
     permissionsLevel: number;
-    ICS?: number[];
-    greenDot: boolean;
+    additionalTrainings: [];
+    specializations: [];
     isActive?: boolean;
+    picture: string
 }
 
 export interface volContext {

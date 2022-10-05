@@ -17,8 +17,10 @@ const DBRoutes = express.Router();
 
 // get all Volunteers in db
 DBRoutes.get("/volunteerDB", (req, res) => {
+    console.log('req', req.body)
     getClient().then(client => {
         return client.db().collection<Volunteer>("Volunteers").find().toArray().then(results => {
+            console.log('results', results)
             res.json(results); //send JSON results
         });
     }).catch(err => {

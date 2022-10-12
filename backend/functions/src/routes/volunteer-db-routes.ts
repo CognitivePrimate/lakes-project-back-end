@@ -11,17 +11,48 @@ import decodeIDToken from '../services/authenticateToken'
 import { getClient } from "../db";
 import { Volunteer} from "../models/volunteer";
 import createUser from '../services/createUser';
+import { Organization, OrgContext } from '../models/organizations';
 
 const DBRoutes = express.Router();
 
 
 // get all Volunteers in db
-DBRoutes.get("/volunteerDB", (req, res) => {
-    console.log('req', req.body)
+DBRoutes.get("/volunteerDBAll", (req, res) => {
+    console.log('req', req)
     getClient().then(client => {
         return client.db().collection<Volunteer>("Volunteers").find().toArray().then(results => {
             console.log('results', results)
             res.json(results); //send JSON results
+        });
+    }).catch(err => {
+        console.error("Fail", err);
+        res.status(500).json({ message: "Internal Server Error" })
+    });
+})
+
+//gets volunteers based on active org of requesting user
+DBRoutes.get("/volunteerDB", (req, res) => {
+    console.log('reqHeaders', req.headers.activeorg)
+    const orgString: string | string[] | undefined = req.headers.activeorg
+    let activeOrg: OrgContext
+    if (typeof orgString === "string" && orgString !== undefined){
+        activeOrg = JSON.parse(orgString)
+    } else {
+        res.status(401).json({message: 'You are not authorized.'})
+    }
+
+    getClient().then(client => {
+        return client.db().collection<Organization>("Organizations").findOne({_id: new ObjectId(activeOrg.orgId)}).then(results => {
+            console.log('results', results)
+            const volunteers: object[] | undefined = results?.volunteers
+
+            if (volunteers !== undefined){
+                
+            }else {
+                res.status(403).json({message: 'No.'})
+            }
+
+            // res.json(results); //send JSON results
         });
     }).catch(err => {
         console.error("Fail", err);

@@ -9,7 +9,7 @@ import decodeIDToken from '../services/authenticateToken'
 
 // imports from local files
 import { getClient } from "../db";
-import { Volunteer} from "../models/volunteer";
+import { volContext, Volunteer} from "../models/volunteer";
 import createUser from '../services/createUser';
 import { Organization, OrgContext } from '../models/organizations';
 
@@ -36,20 +36,37 @@ DBRoutes.get("/volunteerDB", (req, res) => {
     const orgString: string | string[] | undefined = req.headers.activeorg
     let activeOrg: OrgContext
     if (typeof orgString === "string" && orgString !== undefined){
-        activeOrg = JSON.parse(orgString)
+        try {
+            activeOrg = JSON.parse(orgString)
+        } catch (e) {
+            console.log(`Org Context Parsing Error: ${e}`)
+        }
+       
     } else {
         res.status(401).json({message: 'You are not authorized.'})
     }
 
     getClient().then(client => {
-        return client.db().collection<Organization>("Organizations").findOne({_id: new ObjectId(activeOrg.orgId)}).then(results => {
+        return client.db().collection<Organization>("Organizations").findOne({_id: new ObjectId(activeOrg.orgId)}).then((results) => {
             console.log('results', results)
-            const volunteers: object[] | undefined = results?.volunteers
-
+            const volunteers: volContext[] | undefined = results?.volunteers
             if (volunteers !== undefined){
-                
+                const idArray: ObjectId[] = []
+                volunteers.forEach((vol) => {
+                    if(vol._id !== undefined){
+                        idArray.push(new ObjectId(vol._id))
+                    }
+                    
+                })
+                console.log('idArr', idArray)
+                //get vols from vol collection and return
+                return client.db().collection<Volunteer>("Volunteers").find({"_id": {"$in": idArray}}).toArray().then(vols => {
+                    console.log('vols', vols)
+                    res.json(vols)
+                })
             }else {
                 res.status(403).json({message: 'No.'})
+                return null
             }
 
             // res.json(results); //send JSON results

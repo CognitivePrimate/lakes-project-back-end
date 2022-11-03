@@ -143,16 +143,15 @@ DBRoutes.put("/VolunteerDB/:id", (req, res) => {
     // console.log(volunteer)
     delete volunteer._id
     volunteer.activeOrganization = ''
-    getClient().then(client => {
-        return client.db().collection<Volunteer>("Volunteers").updateOne( {_id:new ObjectId(id)}, {$set: volunteer}).then(result => {
-            if (result.modifiedCount === 0) {
-                res.status(404).json({message: "Nah."});
-            }else{
-                volunteer._id = new ObjectId(id)
-                console.log('resVol', volunteer)
-                res.json(volunteer)
-            }
-        })
+    getClient().then(async client => {
+        const result = await client.db().collection<Volunteer>("Volunteers").updateOne({ _id: new ObjectId(id) }, { $set: volunteer });
+        if (result.modifiedCount === 0) {
+            res.status(404).json({ message: "Nah." });
+        } else {
+            volunteer._id = new ObjectId(id);
+            console.log('resVol', volunteer);
+            res.json(volunteer);
+        }
     })
 })
 

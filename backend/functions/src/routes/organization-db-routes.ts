@@ -53,16 +53,15 @@ orgRoutes.put("/organizationDB/:id", (req, res) => {
   const organization: Organization = req.body;
   console.log('Reqorg', organization)
   delete organization._id
-  getClient().then(client => {
-      return client.db().collection<Organization>("Organizations").updateOne( {_id:new ObjectId(id)}, {$set: organization}).then(result => {
-          if (result.modifiedCount === 0) {
-              res.status(404).json({message: "Nah."});
-          }else{
-            organization._id = new ObjectId(id)
-              console.log('resOrg', organization)
-              res.json(organization)
-          }
-      })
+  getClient().then(async client => {
+      const result = await client.db().collection<Organization>("Organizations").updateOne({ _id: new ObjectId(id) }, { $set: organization });
+    if (result.modifiedCount === 0) {
+      res.status(404).json({ message: "Nah." });
+    } else {
+      organization._id = new ObjectId(id);
+      console.log('resOrg', organization);
+      res.json(organization);
+    }
   })
 })
 

@@ -1,5 +1,6 @@
 // imports from modules
 import express from 'express';
+import { ObjectId } from 'mongodb';
 // import { MongoClient, ObjectId } from "mongodb";
 // import firebase from 'firebase/compat/app'
 
@@ -43,6 +44,25 @@ orgRoutes.get("/organizationDB", (req, res) => {
       console.error("Fail", err);
       res.status(500).json({ message: "Internal Server Error" })
   });
+})
+
+// update a Volunteer by id --- MIGHT NEED TO CHANGE UPDATEONE? -----NEEDS TO BE FINISHED
+orgRoutes.put("/organizationDB/:id", (req, res) => {
+  const id = req.params.id;
+  console.log('id',id)
+  const organization: Organization = req.body;
+  console.log('Reqorg', organization)
+  delete organization._id
+  getClient().then(async client => {
+      const result = await client.db().collection<Organization>("Organizations").updateOne({ _id: new ObjectId(id) }, { $set: organization });
+    if (result.modifiedCount === 0) {
+      res.status(404).json({ message: "Nah." });
+    } else {
+      organization._id = new ObjectId(id);
+      console.log('resOrg', organization);
+      res.json(organization);
+    }
+  })
 })
 
 export default orgRoutes
